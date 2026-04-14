@@ -71,3 +71,13 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+// Ruta adicional: verificar si hay sesión activa
+app.get("/sesion", (req, res) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ message: "No hay sesión activa." });
+  }
+
+  return res.status(200).json({ message: "Sesión activa." });
+});
