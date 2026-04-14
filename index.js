@@ -57,11 +57,11 @@ app.get("/perfil", verificarToken, (req, res) => {
   });
 });
 
-app.post("/logout", (req, res) => {
-  res.clearCookie("token");
-  return res.status(200).json({
-    message: "Sesión cerrada correctamente.",
-  });
+//Ruta de logout para cerrar sesión
+app.post('/logout', (req, res) => {
+  res.clearCookie('token');
+  return res.status(200).json({ message: 'Logout realizado correctamente.' });
+  console.log("Usuario cerró sesión");
 });
 
 app.get("/", (req, res) => {
