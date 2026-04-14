@@ -57,11 +57,15 @@ app.get("/perfil", verificarToken, (req, res) => {
   });
 });
 
-//Ruta de logout para cerrar sesión
+// Ruta de logout para cerrar sesión
 app.post('/logout', (req, res) => {
+  console.log("Usuario cerró sesión"); // primero
+
   res.clearCookie('token');
-  return res.status(200).json({ message: 'Logout realizado correctamente.' });
-  console.log("Usuario cerró sesión");
+
+  return res.status(200).json({
+    message: 'Logout realizado correctamente.'
+  });
 });
 
 app.get("/", (req, res) => {
@@ -71,13 +75,20 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-// Ruta adicional: verificar si hay sesión activa
+
+// Ruta para verificar si el usuario tiene una sesión activa
 app.get("/sesion", (req, res) => {
   const token = req.cookies.token;
 
+  // Si no hay token, no hay sesión activa
   if (!token) {
-    return res.status(401).json({ message: "No hay sesión activa." });
+    return res.status(401).json({
+      message: "No hay sesión activa. Usuario no autenticado."
+    });
   }
 
-  return res.status(200).json({ message: "Sesión activa." });
+  // Si existe token, el usuario tiene sesión
+  return res.status(200).json({
+    message: "Sesión activa. Usuario autenticado correctamente."
+  });
 });
